@@ -1,0 +1,8 @@
+CD-ROM
+CD-ROM/*
+*.tds
+*.obj
+*.exe
+*.o
+Debug
+Debug/*

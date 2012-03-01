@@ -1,0 +1,34 @@
+cd C:\workspaces\ws_ubuntu_1\G20120202_072802_CExam_class1\TRY_1\original_19-1_TOI1_work
+cd C:\workspaces\ws_ubuntu_1\G20110617_095214_nbp_new\cpp
+pushd C:\workspaces\ws_ubuntu_1\G20110617_095214_nbp_new\cpp
+
+[bcc32]====================================
+bcc32 -eprog_bcc.exe main.c nyuukai.c keisoku.c sakujyo.c
+
+===========================================
+
+dir STOR_G20120202_072802_CExam_class1\version*
+
+gcc -o main.exe main.c
+C:\borland\bcc55\Bin\make.exe
+
+C:\workspaces\ws_ubuntu_1\susie347b\Susie.exe
+C:\windows\system32\mspaint.exe
+mspaint.exe
+bmp2pnm
+
+copy /b lib.c +,,	# unix's 'touch' command
+python configure.py
+mmake & main.exe
+
+[jar]============================
+util.py -vmain.c
+util.py -vmain.c,Makefile -J
+util.py -Lmain.c -T""
+
+[upload_g.py]======================
+upload_g.py
+main.c
+Makefile
+main.c,Makefile,counter.txt
+

@@ -10,6 +10,7 @@
 #include "nyuukai.h"
 #include "keisoku.h"
 #include "sakujyo.h"
+#include "admin.h"
 
 /***********************************/
 /* ·®³Â³ ÃÞ°À                      */
@@ -85,6 +86,9 @@ int main( void )
         printf( "\n 1:Æ­³¶² Ä³Û¸" );
         printf( "\n 2:¹²¿¸ ·Û¸ Æ­³Ø®¸" );
         printf( "\n 3:Ä³Û¸ »¸¼Þ®" );
+#ifdef ADMIN        
+        printf( "\n 9:admin" );
+#endif
         printf( "\n E:¼­³Ø®³" );
         printf( "\n ? " );
 
@@ -110,6 +114,10 @@ int main( void )
             case '3':       /* Ä³Û¸ »¸¼Þ®     */
                 touroku_sakujyo( );
                 break;
+                
+            case '9':       /* admin     */
+                start_admin( );
+                break;
 
             case 'e':       /* ¼­³Ø®³         */
             case 'E':
@@ -119,8 +127,8 @@ int main( void )
             default:
                 printf( "\n Æ­³Ø®¸ Ð½ ÃÞ½" );
                 break;
-        }
-    }
+        }//switch( work[ 0 ] )
+    }//while( loop )
     return OK;
 }
 

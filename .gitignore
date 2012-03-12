@@ -6,3 +6,4 @@ CD-ROM/*
 *.o
 Debug/
 Debug/*
+*.tbl

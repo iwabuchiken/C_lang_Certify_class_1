@@ -110,7 +110,11 @@ int keisoku_input( void )
 /*   ØÀ°Ý   : 0:OK                  */
 /*           -1:NG                  */
 /************************************/
+#ifdef ADMIN
+int codedata_tbl_read( void )
+#else
 static int codedata_tbl_read( void )
+#endif
 {
     int     ret;                        /* ØÀ°Ý º°ÄÞ                */
     FILE    *fp;                        /* Ì§²Ù Îß²ÝÀ               */

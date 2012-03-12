@@ -1,4 +1,4 @@
-cd C:\workspaces\ws_ubuntu_1\G20120202_072802_CExam_class1\TRY_1\H19_3\original
+cd C:\WORKS\WORKSPACES\C_lang_Certify_class_1\TRY_1\H19-3_TOI2_v2
 cd C:\workspaces\ws_ubuntu_1\G20110617_095214_nbp_new\cpp
 pushd C:\workspaces\ws_ubuntu_1\G20110617_095214_nbp_new\cpp
 

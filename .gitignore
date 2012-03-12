@@ -4,5 +4,5 @@ CD-ROM/*
 *.obj
 *.exe
 *.o
-Debug
+Debug/
 Debug/*

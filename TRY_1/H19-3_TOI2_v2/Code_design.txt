@@ -1,0 +1,128 @@
+<Basics>------------------------------
+1. File: Code_design.txt
+2. Date: 
+3. Author: 岩淵　謙
+4. Version: 1.0
+
+<functions>------------------------------
+
+<variables>------------------------------
+
+<flow>------------------------------
+
+<Algorythms & formula>----------------------
+<coding steps>---------------------------
+/***********************
+* 1. admin.c	=> add: "admin"
+* 2. admin.c	=> add: "update akicode"
+* 3. admin.c	=> add: show individual datum
+* 4. admin.c	=> add: Get codedata_tbl
+* 5. admin.c	=> add: Show codedata_tbl
+* 6. admin.c	=> add: Show keisoku_tbl
+* 7. main.c		=> add: keisoku_tbl_data[]:KEISOKU_TBL
+* 8. admin.c	=> add: int keisoku_tbl_read_all()
+************************/
+１．main menu => let's add: "admin"
+	1. main.c
+		*1) add: void admin(): signiture
+		*2) edit: void admin(): body
+			1. start_admin()
+		*3) add: #include "admin.h"
+	*1. main.h
+		*1) add: void admin()
+	*2. create a new file: admin.c, admin.h
+		*1) Create a file
+			*1. admin.c
+			*2. admin.h
+	*3. [admin.c] start_admin()
+		1) extern, void, void(memory class, return, parameter)
+	*4. [admin.h] start_admin()
+		1) extern, void, void(memory class, return, parameter)
+	*5. [admin.c] get_akicode_tbl()
+		*1) signiture
+		*2) body
+			*1. open the file
+			*1. akicode_tbl[]
+				=> declare as a extern
+			*2. read data: akicode_tbl
+			*3. display data
+	*5. [main.c] static int akicode_tbl_create( void )
+		*1) Memory class designifier
+			=> from "static" to "extern"
+	*5. [main.h] static int akicode_tbl_create( void )
+		*1) Memory class designifier
+			=> from "static" to "extern"
+	*6. [admin.h] get_akicode_tbl()
+2.admin: main menu => let's add: "update akicode"
+	1) [admin.c]
+		1. add: a new choice
+	2) [nyuukai.c]
+		1. edit: static int akicode_tbl_update( void )
+			=> "extern"-ize
+	3) [nyuukai.h]
+		1. edit: static int akicode_tbl_update( void )
+			=> "extern"-ize
+3. admin: main menu
+	=> add: show individual datum
+	1) [admin.c]
+		1. add: show_individual_datum()
+			*1) signiture
+			*1) menu
+			2) body
+				1.
+		2. add: keisoku_tbl_read()
+			*1) signiture
+				=> static int; void(signifier, parameters)
+			*1) menu
+			2) body
+				1. extern sort_keisoku_tbl[]
+				
+	2) [admin.h]
+		*1. add: show_individual_datum()
+			*1) signiture
+		*2. add: keisoku_tbl_read()
+			*1) signiture
+4. admin: main menu
+	*=> add: Get codedata_tbl	
+	1) [keisoku.c] codedata_tbl_read()
+		*1. signiture => edit
+			"static" => "extern"
+	1) [keisoku.h] codedata_tbl_read()
+		*1. signiture => edit
+			"static" => "extern"
+	1) [admin.c]
+		*1. add: menu
+		*2. add: switch case
+		3. include: keisoku.h
+	2) [admin.h]
+5. admin: main menu
+	=> add: Show codedata_tbl
+	1) [admin.c]
+		*1. add: menu
+		*2. add: switch case
+		3. add: show_codedata_tbl()
+			*1) signiture
+			2) body
+				1. codedata_tbl_read() 
+					<~ (keisoku.c)
+				2. 
+		 
+	2) [admin.h]
+		1. : show_codedata_tbl()
+			*1) signiture
+
+6. admin: main menu
+	=> add: Show keisoku_tbl
+>===============================
+１．仕様[1]
+	=> edit: KEISOKU_TBL
+	1) common.h
+		*1. add: sakujyo:int
+
+<further>---------------------------
+
+<coding history>---------------------------
+*1. first coding
+2. add: "-s" option
+
+===================EOF===================

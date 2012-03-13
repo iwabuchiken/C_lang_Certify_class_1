@@ -221,26 +221,25 @@ static void update_akicode_tbl(void)
  ******************************************/
 static void get_keisoku_tbl(void)
 {
-    /* vars             */
-    int     i;          /* index for 'for' loop     */
-    int     cnt;        /* number of tbl data       */
+    keisoku_rank();
     
-    /* prepare keisoku_tbl      */
-    cnt     = keisoku_tbl_read();
-#ifdef DEBUG
-	printf("[%d]\n", __LINE__);
-    printf("keisoku_tbl prepared\n");
-#endif
-    
-    /* show sort_keisoku_tbl data    */
+// /* vars             */
+// int     i;          /* index for 'for' loop     */
+// int     cnt;        /* number of tbl data       */
+// /* prepare keisoku_tbl      */
+// cnt     = keisoku_tbl_read();
+//#ifdef DEBUG
+//	printf("[%d]\n", __LINE__);
+// printf("keisoku_tbl prepared\n");
+//#endif
+// /* show sort_keisoku_tbl data    */
 /*
-    for (i = 0; i < 10; i++) {
-        printf("sort_keisoku_tbl[%d].kaiin_code=%d\n",
-                i, sort_keisoku_tbl[i].kaiin_code);
-    }//for (i = 0; i < 3; i++)
+// for (i = 0; i < 10; i++) {
+// printf("sort_keisoku_tbl[%d].kaiin_code=%d\n",
+// i, sort_keisoku_tbl[i].kaiin_code);
+// }//for (i = 0; i < 3; i++)
 */
-    
-    
+//
 }//static get_keisoku_tbl(void)
 
 static int keisoku_tbl_read(void)

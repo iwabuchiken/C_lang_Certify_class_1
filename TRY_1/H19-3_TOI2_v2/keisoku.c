@@ -474,7 +474,11 @@ static int kojin_data_update( int kaiin_code, char *keisoku_date, int undou_sisu
 /*   ØÀ°Ý   : 0:OK                  */
 /*           -1:NG                  */
 /************************************/
+#ifdef ADMIN
+int keisoku_rank( void )
+#else
 static int keisoku_rank( void )
+#endif
 {
     int     ret;						/* ØÀ°Ý º°ÄÞ            */
     int     i;							/* ²ÝÃÞ¯¸½              */
@@ -509,7 +513,7 @@ static int keisoku_rank( void )
                     ret = OK;
                 }
             }
-        }
+        }//if( (ret = fread( (char *)&sort_keisoku_tbl[ i ],
 
         /* READ ´×° ? */
         if( ret == NG ) {

@@ -1,3 +1,10 @@
+
+// prototypes ================================
+/*
+static void get_keisoku_tbl(void);
+ * static void keisoku_tbl_read(void);
+*/
+
 /************************************/
 /*  admin.c                       */
 /*          */
@@ -56,6 +63,7 @@ void start_admin( void )
         printf( "\n ¼®Ø ¦ ¾ÝÀ¸ ¼Ã¸ÀÞ»²" );
         printf( "\n 1: get the akicode_tbl" );
         printf( "\n 2: get the codedata_tbl" );
+        printf( "\n 3: get the keisoku_tbl" );
         printf( "\n E:¼­³Ø®³" );
         printf( "\n ? " );
 
@@ -85,6 +93,13 @@ void start_admin( void )
 			case '2':
 				get_codedata_tbl();
 				printf("\nget the codedata_tbl"
+						" => complete\n");
+				break;
+                
+            /* get keisoku_tbl     */
+			case '3':
+				get_keisoku_tbl();
+				printf("\nget the keisoku_tbl"
 						" => complete\n");
 				break;
             /* quit         */
@@ -157,7 +172,22 @@ static void get_akicode_tbl( void )
  ******************************************/
 static void get_codedata_tbl(void)
 {
-    printf("get_codedata_tbl()\n");
+    /* vars             */
+    int         i;      /* index        */
+    
+    /* prepare codedata_tbl[]       */
+    codedata_tbl_read();
+    
+    /* show data        */
+    for (i = 0; i < MEMBER_MAX; i++) {
+        if (i % 10 == 0) {
+            printf("\n%3d", i);
+        }//if (i % 10 == 0)
+        
+        printf("%3d", codedata_tbl[i]);
+    }//for (i = 0; i < MEMBER_MAX; i++)
+    printf("\n");
+    
 }//static void get_codedata_tbl(void)
 
 
@@ -177,3 +207,89 @@ static void update_akicode_tbl(void)
     //printf("update_akicode_tbl(void)\n");
     
 }//static void update_akicode_tbl(void)
+
+/******************************************
+ * get_keisoku_tbl -- obtain keisoku_tbl data and display
+ * 
+ * <Parameters>
+ *        - 
+ *        - 
+ * <Return value>
+ *       : 
+ * <Notices>
+ *      
+ ******************************************/
+static void get_keisoku_tbl(void)
+{
+    /* vars             */
+    int     i;          /* index for 'for' loop     */
+    int     cnt;        /* number of tbl data       */
+    
+    /* prepare keisoku_tbl      */
+    cnt     = keisoku_tbl_read();
+#ifdef DEBUG
+	printf("[%d]\n", __LINE__);
+    printf("keisoku_tbl prepared\n");
+#endif
+    
+    /* show sort_keisoku_tbl data    */
+/*
+    for (i = 0; i < 10; i++) {
+        printf("sort_keisoku_tbl[%d].kaiin_code=%d\n",
+                i, sort_keisoku_tbl[i].kaiin_code);
+    }//for (i = 0; i < 3; i++)
+*/
+    
+    
+}//static get_keisoku_tbl(void)
+
+static int keisoku_tbl_read(void)
+{
+    /* vars             */
+    int     ret;						/* ØÀ°Ý º°ÄÞ            */
+    int     i      = 0;					/* ²ÝÃÞ¯¸½              */
+    FILE    *fp;						/* Ì§²Ù Îß²ÝÀ           */
+    char    *fname = KEISOKU_TBL_NAME;				/* ¹²¿¸ ÃÞ°À Ë®³ Ì§²Ù   */
+    
+    /* open the file    */
+    /* ¹²¿¸ ÃÞ°À Ë®³ Ì§²Ù OPEN -> NULL ? */
+    if( (fp = fopen( fname, "rb" )) == NULL ) {
+        printf( "\n ¹²¿¸ ÃÞ°À Ë®³ Ì§²Ù OPEN ´×°" );
+        return NG;
+    }
+#ifdef DEBUG
+	printf("[%d]\n", __LINE__);
+    printf("File opened: %s\n", KEISOKU_TBL_NAME);
+#endif
+    
+    /* close file       */
+    fclose(fp);
+#ifdef DEBUG
+	printf("[%d]\n", __LINE__);
+    printf("File closed: %s\n", KEISOKU_TBL_NAME);
+#endif
+    
+    /* read keisoku_tbl data    */
+    if( (ret = fread( (char *)&sort_keisoku_tbl[ i ],
+                   sizeof( struct KEISOKU_TBL ), 1, fp )) != 1 ) {
+#ifdef DEBUG
+        printf("[%d]\n", __LINE__);
+        printf("fread() returned non-1 value: %d\n", ret);
+#endif
+
+        return NULL;
+    } else {
+        i ++;
+    }
+        
+    
+#ifdef DEBUG
+	printf("[%d]\n", __LINE__);
+    printf("sort_keisoku_tbl[%d].kaiin_code=%d\n",
+                i, sort_keisoku_tbl[i].kaiin_code);
+#endif
+
+    /* return           */
+    return i;
+    
+}//static void keisoku_tbl_read(void)

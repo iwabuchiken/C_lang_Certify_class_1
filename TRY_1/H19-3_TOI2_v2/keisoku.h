@@ -11,6 +11,7 @@ int codedata_tbl_read( void );
 #else
 static int codedata_tbl_read( void );
 #endif
+
 static void kaiin_code_input( int *kaiin_code );
 static void keisoku_date_input( char *keisoku_date );
 static void keisoku_data_input( int idx );

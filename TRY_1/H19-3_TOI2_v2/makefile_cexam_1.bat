@@ -13,6 +13,7 @@ REM * 	1.str => %1
 REM * 	2. MACRO_TOI => macro option if you want to specify which question
 REM *                   you are targeting for compilation
 REM * 	3. MACRO_ADMIN => macro option if you want the admin menu
+REM * 	4. DEBUG => debug option
 REM * <File history>
 REM *	1. 
 REM ************************************
@@ -24,6 +25,7 @@ set str=
 set macro=
 set MACRO_TOI=
 set MACRO_ADMIN=
+set DEBUG=
 
 REM ************************************
 REM * Show usage
@@ -33,7 +35,7 @@ if "%1"=="" (
 	echo ^<Usage^>
 	echo   makefile_cexam_1.bat go
 	echo ^<Syntax^>
-	echo   makefile_cexam_1.bat ^<macro: TOI^> ^<macro: ADMIN^>
+	echo   makefile_cexam_1.bat ^<macro: TOI^> ^<macro: ADMIN^> ^<macro: DEBUG^>
 	echo ^<Example^>
 	echo   makefile_cexam_1.bat TOI1
 	echo    =^> macro "TOI1" defined	
@@ -60,42 +62,40 @@ rem echo str=%str%
 rem goto end
 
 REM ************************************
-REM * Set macro: TOI2
+REM * Set macro: %1
 REM ************************************
 
 if "%1"=="TOI2" (
     set MACRO_TOI=TOI2
 ) else if "%1"=="ADMIN" (
     set MACRO_ADMIN=ADMIN
+) else if "%1"=="DEBUG" (
+    set DEBUG=DEBUG
 )
 
 REM ************************************
-REM * Set macro: ADMIN
+REM * Set macro: %2
 REM ************************************
 
 if "%2"=="TOI2" (
     set MACRO_TOI=TOI2
 ) else if "%2"=="ADMIN" (
     set MACRO_ADMIN=ADMIN
+) else if "%2"=="DEBUG" (
+    set DEBUG=DEBUG
 )
 
-rem debug
-rem set str=%1%
-rem echo %str:~0,3%
-rem echo %1:~0,2%
-rem if "%str:~0,3%"== "TOI" (
-rem 	echo yes
-rem 	echo %str:~0,3%
-rem ) else (
-rem 	echo no
-rem 	echo %str:~0,3%
-rem )
-rem if "%1:~0,3%"=="TOI" (
-rem 	echo yes
-rem ) else (
-rem 	echo no
-rem 	echo "%1:~0,3%"
-rem )
+REM ************************************
+REM * Set macro: %3
+REM ************************************
+
+if "%3"=="TOI2" (
+    set MACRO_TOI=TOI2
+) else if "%3"=="ADMIN" (
+    set MACRO_ADMIN=ADMIN
+) else if "%3"=="DEBUG" (
+    set DEBUG=DEBUG
+)
 
 REM ************************************
 REM * Compile files into prog.exe
@@ -106,9 +106,11 @@ rem if %MACRO_ADMIN%=="ADMIN" (
 if "%MACRO_ADMIN%"=="ADMIN" (
     echo MACRO_ADMIN=%MACRO_ADMIN%
     echo bcc32 -D%MACRO_TOI% -D%MACRO_ADMIN% -eprog_bcc.exe main.c nyuukai.c keisoku.c sakujyo.c admin.c
+    bcc32 -D%MACRO_TOI% -D%MACRO_ADMIN% -D%DEBUG% -eprog_bcc.exe main.c nyuukai.c keisoku.c sakujyo.c admin.c
 ) else (
     echo MACRO_ADMIN=%MACRO_ADMIN%
-    echo bcc32 -D%MACRO_TOI% -eprog_bcc.exe main.c nyuukai.c keisoku.c sakujyo.c
+    echo bcc32 -D%MACRO_TOI% -D%DEBUG% -eprog_bcc.exe main.c nyuukai.c keisoku.c sakujyo.c
+    bcc32 -D%MACRO_TOI% -D%DEBUG% -eprog_bcc.exe main.c nyuukai.c keisoku.c sakujyo.c
 )
 rem bcc32 %macro% -eprog_bcc.exe main.c nyuukai.c keisoku.c sakujyo.c admin.c
 REM bcc32 %macro% -eprog.exe main.c nyuukai.c keisoku.c sakujyo.c admin.c
@@ -120,5 +122,6 @@ set str=
 set macro=
 set MACRO_TOI=
 set MACRO_ADMIN=
+set DEBUG=
 
 :end

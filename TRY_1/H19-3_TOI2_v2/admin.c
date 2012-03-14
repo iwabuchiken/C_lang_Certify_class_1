@@ -221,7 +221,8 @@ static void update_akicode_tbl(void)
  ******************************************/
 static void get_keisoku_tbl(void)
 {
-    keisoku_rank();
+    keisoku_tbl_read();
+    //keisoku_rank();
     
 // /* vars             */
 // int     i;          /* index for 'for' loop     */
@@ -261,13 +262,6 @@ static int keisoku_tbl_read(void)
     printf("File opened: %s\n", KEISOKU_TBL_NAME);
 #endif
     
-    /* close file       */
-    fclose(fp);
-#ifdef DEBUG
-	printf("[%d]\n", __LINE__);
-    printf("File closed: %s\n", KEISOKU_TBL_NAME);
-#endif
-    
     /* read keisoku_tbl data    */
     if( (ret = fread( (char *)&sort_keisoku_tbl[ i ],
                    sizeof( struct KEISOKU_TBL ), 1, fp )) != 1 ) {
@@ -278,9 +272,17 @@ static int keisoku_tbl_read(void)
 
         return NULL;
     } else {
-        i ++;
+        //i ++;
     }
-        
+
+    /* close file       */
+    fclose(fp);
+#ifdef DEBUG
+	printf("[%d]\n", __LINE__);
+    printf("File closed: %s\n", KEISOKU_TBL_NAME);
+#endif
+    
+
     
 #ifdef DEBUG
 	printf("[%d]\n", __LINE__);

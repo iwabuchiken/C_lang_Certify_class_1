@@ -1,0 +1,27 @@
+cc=bcc32
+#SRC_FILE=sub1_p121_get_average.c
+#LIB_FILE=mylib.c
+#HEADER=mylib.h
+MACRO=MYLIB
+#EXE_FILE=
+LIB_FILE=mylib.c
+
+#sub1_p121_get_average.exe: $(SRC_FILE) $(LIB_FILE) $(HEADER)
+$(EXE_FILE): $(SRC_FILE) $(LIB_FILE)
+	$(cc) -D$(MACRO) -e$* $**
+#sub1_p121_get_average.exe: sub1_p121_get_average.obj mylib.obj
+#	$(cc) -c sub1_p121_get_average.c mylib.h
+#	$(cc) -c mylib.c mylib.h
+#	$(cc) -e$* $**
+
+#mylib.obj: mylib.c mylib.h
+#	$(cc) -c -D$(MACRO) $**
+
+#sub1_p121_get_average.obj: sub1_p121_get_average.c mylib.h
+#	$(cc) -c -D$(MACRO) $**
+
+##.c.obj:
+##	$(cc) -c $<
+##all:
+##	sub1_p121_get_average.exe
+	

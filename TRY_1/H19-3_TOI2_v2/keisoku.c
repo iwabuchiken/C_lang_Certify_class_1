@@ -299,14 +299,14 @@ static void keisoku_data_input( int idx )
                     break;
                  }
             }
-        }
+        }//for( i = 0; i < 3; i++ )
 
         if( i < 3 ) {
             continue;
         }
 
         break;
-    }
+    }//while( loop )
 
     /* Æ­³Ø®¸ ÃÞ°À Ã°ÌÞÙ ¾¯Ä */
     keisoku_indata[ idx ].huka = atoi( work[ 0 ] );

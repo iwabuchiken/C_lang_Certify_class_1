@@ -56,8 +56,8 @@ int nyuukai_touroku( void )
                 /* º°ÄÞ ÃÞ°À À²¼®³ Ë®³ º³¼Ý */
                 ret = codedata_tbl_update( kaiin_code, fptr );
             }
-        }
-    }
+        }//if( (ret = akicode_tbl_update( )) == OK )
+    }//if( (ret = kakunin_input( msg )) == OK )
 
     if( ret == OK ) {
         printf( "\n Æ­³¶² Ä³Û¸ ¼®Ø ¶Þ ¼­³Ø®³ ¼Ï¼À" );

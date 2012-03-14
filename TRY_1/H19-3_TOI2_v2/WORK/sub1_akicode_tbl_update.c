@@ -151,10 +151,30 @@ int akicode_tbl_update(void)
     /* get the current number of aki codes  */
     cnt = akicode_tbl[0];
     
+    /* update data          */
+    for (i = 1; i < cnt; i++) {
+        akicode_tbl[i] = akicode_tbl[i + 1];
+    }//for (i = 1; i < cnt; i++)
+    
+    /* 0-fy the unused element in akicode_tbl   */
+    akicode_tbl[i] = 0;
+    
+    /* renew number of aki codes    */
+    akicode_tbl[0] = cnt - 1;
+    
+#ifdef DEBUG
+    printf("[%d]\n", __LINE__);
+    akicode_tbl_disp();
+    printf("\n");
+    printf("i=%d\n", i);
+#endif
+
+/*
 #ifdef DEBUG
     printf("[%d]\n", __LINE__);
     printf("akicode_tbl[0]=%d\n", akicode_tbl[0]);
 #endif
+*/
 
     /* return           */
     return OK;

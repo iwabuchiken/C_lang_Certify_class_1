@@ -30,6 +30,7 @@
 
 // global vars ============================
 int     akicode_tbl[MEMBER_MAX + 1];    /* akicode table        */
+int     used_code_tbl[MEMBER_MAX + 1];    /* akicode table        */
 
 // functions ============================
 /******************************************
@@ -67,7 +68,21 @@ int main(int argc, char* argv[])
     /* initialize akicode table */
     ret = init_akicode_tbl();
     if (ret == OK) {
+#ifdef DEBUG
+        printf("[%d] ", __LINE__);
+#endif
+
         printf("akicode table initialized\n");
+    } else {//if (ret == OK)
+        printf("[%d] ", __LINE__);
+        printf("initialization error\n");
+        exit(1);
+    }//if (ret == OK)
+    
+    /* initialize used_code table */
+    ret = init_used_code_tbl();
+    if (ret == OK) {
+        printf("used_code table initialized\n");
     } else {//if (ret == OK)
         printf("initialization error\n");
         exit(1);
@@ -83,6 +98,7 @@ int main(int argc, char* argv[])
         printf("*********************\n");
         printf("1. display akicode table\n");
         printf("2. update akicode table\n");
+        printf("3. display used_code table\n");
         printf("Q. Quit\n");
         printf("*********************\n");
         printf("Enter your choice: ");
@@ -105,6 +121,9 @@ int main(int argc, char* argv[])
                 break;
             case '2':
                 akicode_tbl_update();
+                break;
+            case '3':
+                used_code_disp();
                 break;
             case 'Q':
             case 'q':
@@ -142,6 +161,17 @@ int init_akicode_tbl(void)
     return OK;
 }//int init_akicode_tbl(void)
 
+/******************************************
+ * akicode_tbl_update -- update the akicode table
+ * 
+ * <Parameters>
+ *        - 
+ *        - 
+ * <Return value>
+ *       : 
+ * <Notices>
+ *      
+ ******************************************/
 int akicode_tbl_update(void)
 {
     /* vars         */
@@ -180,6 +210,67 @@ int akicode_tbl_update(void)
     return OK;
     
 }//int akicode_tbl_update(void)
+/******************************************
+ * init_used_code_tbl -- initialize the used_code_tbl[]
+ * 
+ * <Parameters>
+ *        - 
+ *        - 
+ * <Return value>
+ *       : 
+ * <Notices>
+ *      length => MEMBER_MAX + 1
+ ******************************************/
+int init_used_code_tbl(void)
+{
+    /* variables	*/
+    //int     used_code_tbl[MEMBER_MAX];    /* used_code table        */
+    int     i;                  /* index for 'for' loop */
+    
+    /* initialize table */
+    used_code_tbl[0]  = (MEMBER_MAX);
+    for (i = 1; i < MEMBER_MAX + 1; i++) {
+        used_code_tbl[i] = 0;
+    }//for (i = 0; i < MEMBER_MAX + 1; i++)
+    
+    return OK;
+}//int init_used_code_tbl(void)
+
+/******************************************
+ * used_code_disp -- display the used_code table
+ * 
+ * <Parameters>
+ *        - 
+ *        - 
+ * <Return value>
+ *       : 
+ * <Notices>
+ *      
+ ******************************************/
+void used_code_disp(void)
+{
+    /* vars         */
+    int         i;      /* index        */
+    
+    /* display      */
+    for (i = 0; i < MEMBER_MAX + 1; i++) {
+        printf("used_code_tbl[%d]=%d\n", i, used_code_tbl[i]);
+    }//for (i = 0; i < MEMBER_MAX + 1; i++)
+    
+}//void used_code_disp(void)
+/******************************************
+ * used_code_tbl_update -- update the table
+ * 
+ * <Parameters>
+ *        - 
+ *        - 
+ * <Return value>
+ *       : 
+ * <Notices>
+ *      
+ ******************************************/
+
+
 
 /*
 #ifdef D

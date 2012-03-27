@@ -22,6 +22,7 @@ void akicode_tbl_disp(void);
 int init_akicode_tbl(void);
 int akicode_tbl_update(void);
 int init_used_code_tbl(void);
-void used_code_disp(void);
+void used_code_tbl_disp(void);
+static int used_code_tbl_update(int mode, int value);
 
 //================EOF================================

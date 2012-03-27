@@ -99,6 +99,7 @@ int main(int argc, char* argv[])
         printf("1. display akicode table\n");
         printf("2. update akicode table\n");
         printf("3. display used_code table\n");
+        //printf("4. Create dummy data\n");
         printf("Q. Quit\n");
         printf("*********************\n");
         printf("Enter your choice: ");
@@ -123,7 +124,7 @@ int main(int argc, char* argv[])
                 akicode_tbl_update();
                 break;
             case '3':
-                used_code_disp();
+                used_code_tbl_disp();
                 break;
             case 'Q':
             case 'q':
@@ -177,9 +178,18 @@ int akicode_tbl_update(void)
     /* vars         */
     int     cnt;        /* number of aki codes  */
     int     i;          /* index                */
+    int     mode;       /* flag for used_code_tbl_update()
+                         *  1   => add
+                         *  2   => delete
+                         */
     
     /* get the current number of aki codes  */
     cnt = akicode_tbl[0];
+    
+    /* set the nuber to used_code_tbl[]     */
+    mode = 1;
+    used_code_tbl_update(1, akicode_tbl[1]);
+    //used_code_tbl[MEMBER_MAX - (used_code_tbl[0]) + 1] = akicode_tbl[1];
     
     /* update data          */
     for (i = 1; i < cnt; i++) {
@@ -228,7 +238,8 @@ int init_used_code_tbl(void)
     int     i;                  /* index for 'for' loop */
     
     /* initialize table */
-    used_code_tbl[0]  = (MEMBER_MAX);
+    //used_code_tbl[0]  = (MEMBER_MAX);
+    used_code_tbl[0]  = 0;
     for (i = 1; i < MEMBER_MAX + 1; i++) {
         used_code_tbl[i] = 0;
     }//for (i = 0; i < MEMBER_MAX + 1; i++)
@@ -247,7 +258,7 @@ int init_used_code_tbl(void)
  * <Notices>
  *      
  ******************************************/
-void used_code_disp(void)
+void used_code_tbl_disp(void)
 {
     /* vars         */
     int         i;      /* index        */
@@ -258,6 +269,7 @@ void used_code_disp(void)
     }//for (i = 0; i < MEMBER_MAX + 1; i++)
     
 }//void used_code_disp(void)
+
 /******************************************
  * used_code_tbl_update -- update the table
  * 
@@ -270,6 +282,26 @@ void used_code_disp(void)
  *      
  ******************************************/
 
+static int used_code_tbl_update(int mode, int value)
+{
+    /* vars         */
+    int         i;      /* index        */
+    
+    /* processing   */
+    if (mode == 1) {
+        /* shift every element      */
+        for (i = MEMBER_MAX; i > 1; i--) {
+            used_code_tbl[i] = used_code_tbl[i - 1];
+        }//for (i = MEMBER_MAX; i < 1; i++)    
+        used_code_tbl[1] = value;
+        used_code_tbl[0] ++;
+    } else {//if (mode == 1)
+        //continue;
+    }//if (mode == 1)
+    
+    return OK;
+    
+}//int used_code_tbl_update(int mode, int value)
 
 
 /*

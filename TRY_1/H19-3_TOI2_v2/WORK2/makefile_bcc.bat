@@ -35,19 +35,20 @@ REM ************************************
 REM * Show usage
 REM * Set "str" variable
 REM ************************************
-if "%1"=="" (
-	echo ^<Usage^>
-	echo   makefile_cexam_1.bat sub1~.c
-	echo ^<Syntax^>
-	echo   makefile_cexam_1.bat ^<source file^> ^<macro: TOI^> ^<macro: ADMIN^> ^<macro: DEBUG^>
-	echo ^<Example^>
-	echo   makefile_cexam_1.bat sub1~.c TOI1
-	echo    =^> macro "TOI1" defined	
-	
-	goto end
-) else (
-	set str=%1
-)
+rem if "%1"=="" (
+rem 	echo ^<Usage^>
+rem 	echo   makefile_cexam_1.bat sub1~.c
+rem 	echo ^<Syntax^>
+rem 	echo   makefile_cexam_1.bat ^<source file^> ^<macro: TOI^> ^<macro: ADMIN^> ^<macro: DEBUG^>
+rem 	echo ^<Example^>
+rem 	echo   makefile_cexam_1.bat sub1~.c TOI1
+rem 	echo    =^> macro "TOI1" defined	
+rem 	
+rem 	goto end
+rem ) else (
+rem 	set str=%1
+rem )
+set str=%1
 
 REM ************************************
 REM * Delete files
@@ -130,23 +131,9 @@ if "%3"=="TOI2" (
 REM ************************************
 REM * Compile files into prog.exe
 REM ************************************
-rem echo gcc %macro% -o prog_gcc.exe main.c nyuukai.c keisoku.c sakujyo.c
-rem gcc %macro% -o prog_gcc.exe main.c nyuukai.c keisoku.c sakujyo.c
-rem if %MACRO_ADMIN%=="ADMIN" (
-rem if "%MACRO_ADMIN%"=="ADMIN" (
-rem echo MACRO_ADMIN=%MACRO_ADMIN%
-
-set LINE=bcc32 -D%DEBUG% -e%TRUNK%_bcc.exe %1
+set LINE=bcc32 -DADMIN -eprog_bcc.exe main.c nyuukai.c admin.c
 echo %LINE%
 %LINE%
-
-rem ) else (
-rem     echo MACRO_ADMIN=%MACRO_ADMIN%
-rem     echo bcc32 -D%MACRO_TOI% -D%DEBUG% -eprog_bcc.exe main.c nyuukai.c keisoku.c sakujyo.c
-rem     bcc32 -D%MACRO_TOI% -D%DEBUG% -eprog_bcc.exe main.c nyuukai.c keisoku.c sakujyo.c
-rem )
-rem bcc32 %macro% -eprog_bcc.exe main.c nyuukai.c keisoku.c sakujyo.c admin.c
-REM bcc32 %macro% -eprog.exe main.c nyuukai.c keisoku.c sakujyo.c admin.c
 
 REM ************************************
 REM * end module

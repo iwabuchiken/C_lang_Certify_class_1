@@ -10,3 +10,5 @@ for_applicants
 for_applicants/*
 .git
 .git/*
+*.i
+*.tbl

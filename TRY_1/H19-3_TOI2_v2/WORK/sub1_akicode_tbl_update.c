@@ -18,6 +18,11 @@
  * 	1. 
  ************************************/
 
+#ifndef TIME_H
+#define TIME_H
+#include "time.h"
+#endif TIME_H
+
 #ifndef COMMON_H
 #define COMMON_H
 #include "common.h"
@@ -95,11 +100,14 @@ int main(int argc, char* argv[])
     loop = TRUE;
     while (loop) {
         /* display menu     */
+        //debug
+        //printf("Current time: %s\n", get_time_string(1));
+        printf("Current time: %s\n", get_time_string(2));
         printf("*********************\n");
         printf("1. display akicode table\n");
         printf("2. update akicode table\n");
         printf("3. display used_code table\n");
-        //printf("4. Create dummy data\n");
+        printf("4. Create dummy data\n");
         printf("Q. Quit\n");
         printf("*********************\n");
         printf("Enter your choice: ");
@@ -125,6 +133,9 @@ int main(int argc, char* argv[])
                 break;
             case '3':
                 used_code_tbl_disp();
+                break;
+            case '4':
+                create_dummy_data();
                 break;
             case 'Q':
             case 'q':
@@ -302,6 +313,76 @@ static int used_code_tbl_update(int mode, int value)
     return OK;
     
 }//int used_code_tbl_update(int mode, int value)
+
+static void input_date(char record_date[])
+{
+    
+}//void input_date(char record_date[])
+
+static void create_dummy_data(void)
+{
+    /* vars         */
+    int         i;      /* index        */
+    
+    /* create dummy codes       */
+    for (i = 0; i < 5; i++) {
+        akicode_tbl_update();
+    }//for (i = 0; i < 5; i++)    
+    
+    /* create dummy records     */
+    
+    
+    //debug
+    //printf("create_dummy_data()\n");
+    
+}//void create_dummy_data(void)
+
+/******************************************
+ * get_time_string -- return a time string
+ * 
+ * <Parameters>
+ *      mode:int  - type of the time string
+ *        - 
+ * <Return value>
+ *      time_str : char*
+ * <Notices>
+ *  Mode
+ *      1   => Wed Mar 28 07:52:18 2012
+ *      2   => 20120328_080912
+ *      3   => 20120328
+ * 
+ ******************************************/
+static char* get_time_string(int mode)
+{
+    char    *time_str;  /* time string  */
+    time_t  timer;      /* time_t var   */
+    struct  tm  *date;  /* tm struct    */
+    
+    /* alloc time_str   */
+    time_str = malloc(sizeof(char) * 30);
+    
+    /* set timer        */
+    timer   = time(NULL);
+    /* set localtime    */
+    date    = localtime(&timer);
+    
+    /* prepare time string   */
+    //printf("%s\n", asctime(date));
+    if (mode == 1) {
+        //time_str = asctime(date);
+        strcpy(time_str, asctime(date));
+    } else if (mode == 2) {//if (mode == 1)
+        strftime(time_str, 30, "%Y%m%d_%H%M%S", date);
+    } else if (mode == 3) {//if (mode == 1)
+        strftime(time_str, 30, "%Y%m%d", date);
+    } else {//if (mode == 1)
+    }//if (mode == 1)
+    //time_str = asctime(date);
+    
+    /* return           */
+    return time_str;
+    
+}//char* get_time_string(void)
 
 
 /*

@@ -127,6 +127,9 @@ static void get_record_from_akicode_tbl(void)
     char        *fname = AKICODE_TBL_NAME;  /* file name    */
     FILE        *fp;
     int         value;  /* value of the record in the akicode_tbl   */
+    char        line[10];  /* input line   */
+    int         index;  /* index for fseek  */
+    
     
     /* setup the table      */
     /* open the file    */
@@ -135,9 +138,21 @@ static void get_record_from_akicode_tbl(void)
         exit(1);
     }
 
+    /* input the number     */
+    printf("Input number: ");
+    fflush(stdin);
+    fgets(line, sizeof(line), stdin);
+    line[strlen(line) - 1] = '\0';
+    //debug
+    printf("line=%s\n", line);
+    index = atoi(line);
+    //debug
+    printf("index=%d\n", index);
+    
     /* seek the location    */
-    ret = fseek(fp, 10 * sizeof(akicode_tbl[0]), SEEK_SET);
-    if (ret != OK) {        
+    //ret = fseek(fp, 10 * sizeof(akicode_tbl[0]), SEEK_SET);
+    ret = fseek(fp, index * sizeof(akicode_tbl[0]), SEEK_SET);
+    if (ret != OK) {
         printf("[%d] File seek error\n", __LINE__);
         fclose(fp);        
         exit(1);
@@ -155,7 +170,7 @@ static void get_record_from_akicode_tbl(void)
     }//if (ret != 1)
     
     /* show: data           */
-    printf("value(10th record)=%d\n", value);
+    printf("value(record: %d)=%d\n", index, value);
     
 }//static void get_record_from_akicode_tbl(void)
 
@@ -164,7 +179,9 @@ static int akicode_tbl_read(void)
     int         ret;    /* result       */
     char        *fname = AKICODE_TBL_NAME;  /* file name    */
     FILE        *fp;
+    //int         loop;   /* flag for while loop  */
     
+    //while (loop) {
     /* open the file    */
     if( (fp = fopen( fname, "rb" )) == NULL ) {
         printf( "\n ±· º°ÄÞË®³ Ì§²Ù OPEN ´×°" );
@@ -180,4 +197,7 @@ static int akicode_tbl_read(void)
         printf("akicode_tbl loaded\n");
         return OK;
     }//if (ret != 1)
+
+    //}//while (loop)
+
 }//static void akicode_tbl_read(void)

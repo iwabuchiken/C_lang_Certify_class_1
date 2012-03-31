@@ -1,14 +1,1 @@
 cd C:\WORKS\WORKSPACES\C_lang_Certify_class_1\TRY_1\H19-3_TOI2_v2\WORK2
-cd C:\workspaces\ws_ubuntu_1\G20110617_095214_nbp_new\cpp
-pushd C:\workspaces\ws_ubuntu_1\G20110617_095214_nbp_new\cpp
-
-C:\workspaces\ws_ubuntu_1\susie347b\Susie.exe
-C:\windows\system32\mspaint.exe
-
-copy /b lib.c +,,	# unix's 'touch' command
-[cl]=============================================
-makefile_cexam_1.bat ADMIN DEBUG
-
-del *.obj *.tds *.exe
-
-==================EOF====================================

@@ -131,7 +131,7 @@ if "%3"=="TOI2" (
 REM ************************************
 REM * Compile files into prog.exe
 REM ************************************
-set LINE=bcc32 -DADMIN -eprog_bcc.exe main.c nyuukai.c admin.c
+set LINE=bcc32 -DADMIN -eprog_bcc.exe main.c nyuukai.c admin.c sakujyo.c
 echo %LINE%
 %LINE%
 

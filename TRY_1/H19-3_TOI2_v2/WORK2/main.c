@@ -1,6 +1,7 @@
 /***********************************/
 /*  main.c                         */
 /*   ±½ÚÁ¯¸ ¸×ÌÞ ÒÝÊÞ° ¶ÝØ ÌßÛ¸Þ×Ñ */
+/*   C:\WORKS\WORKSPACES\C_lang_Certify_class_1\TRY_1\H19-3_TOI2_v2\WORK2\main.c */
 /***********************************/
 #include <stdio.h>
 #include <string.h>
@@ -9,6 +10,7 @@
 #include "main.h"
 #include "admin.h"
 #include "nyuukai.h"
+#include "sakujyo.h"
 
 /***********************************/
 /* ·®³Â³ ÃÞ°À                      */
@@ -89,6 +91,7 @@ int main( void )
         printf( "\n *******************************" );
         printf( "\n ¼®Ø ¦ ¾ÝÀ¸ ¼Ã¸ÀÞ»²" );
         printf( "\n 1:Æ­³¶² Ä³Û¸" );
+        printf( "\n 3:Ä³Û¸ »¸¼Þ®" );
 #ifdef ADMIN        
         printf( "\n 9:admin" );
 #endif
@@ -110,6 +113,10 @@ int main( void )
                 nyuukai_touroku( );
                 break;
 
+            case '3':       /* Ä³Û¸ »¸¼Þ®     */
+                touroku_sakujyo( );
+                break;
+                
             case '9':       /* admin     */
                 start_admin( );
                 break;
@@ -211,3 +218,197 @@ static int codedata_tbl_create( void )
     
     return ret;
 }//static int codedata_tbl_create( void )
+
+int akicode_tbl_read( void )
+{
+    int     ret;				/* ØÀ°Ý º°ÄÞ        */
+    int     i;					/* ²ÝÃÞ¯¸½          */
+    FILE    *fp;				/* Ì§²Ù Îß²ÝÀ       */
+    char    *fname = AKICODE_TBL_NAME;		/* ±· º°ÄÞ Ë®³ Ì§²Ù */
+
+    /* ±· º°ÄÞ Ë®³ Ì§²Ù OPEN -> NULL ? */
+    if( (fp = fopen( fname, "rb" )) == NULL ) {
+        printf( "\n ±· º°ÄÞ Ë®³ Ì§²Ù OPEN ´×°" );
+        return NG;
+    }
+
+    for( i = 0; i < MEMBER_MAX + 1; i++ ) {
+        /* ±· º°ÄÞ Ë®³ Ì§²Ù READ -> 1²¶Þ² ? */
+        if( (ret = fread( (char *)&akicode_tbl[ i ], sizeof( int ), 1, fp ) )
+                   != 1 ) {
+            /* READ ´×° ±Ø ? */
+            if( ferror( fp ) != 0 ) {
+                printf( "\n ±· º°ÄÞ Ë®³ Ì§²Ù READ ´×°" );
+                ret = NG;
+            }
+            else {
+                /* Ì§²Ù EOF ÃÞ Å² ? */
+                if( feof( fp ) == 0 ) {
+                    printf( "\n ±· º°ÄÞ Ë®³ Ì§²Ù READ ´×°" );
+                    ret = NG;
+                }
+                else {
+                    ret = OK;
+                }
+            }
+            break;
+        }
+    }
+
+    /* ±· º°ÄÞ Ë®³ Ì§²Ù CLOSE */
+    fclose( fp );
+
+    return ret;
+}//int akicode_tbl_read( void )
+
+int kakunin_input( char *msg )
+{
+    int     ret;            /* ØÀ°Ý º°ÄÞ    */
+    int     loop = TRUE;    /* Ù°Ìß Ì×¸Þ    */
+    char    work[ 128 ];    /* Æ­³Ø®¸ Ü°¸   */
+
+    while( loop ) {
+        /* ¶¸ÆÝ Ë®³¼Þ */
+        printf( msg );
+        printf( "\n ? " );
+
+        /* Y/N Æ­³Ø®¸ */
+        work[ 0 ] = '\0';
+        scanf( "%s", work );
+
+        /* Æ­³Ø®¸ ¹À½³ Áª¯¸ -> 1²¶Þ² ? */
+        if( strlen( work ) != 1 ) {
+            printf( "\n Æ­³Ø®¸ Ð½ ÃÞ½" );
+            continue;
+        }
+
+        switch( work[ 0 ] ) {
+            case 'Y':   /* Yes */
+            case 'y':
+                ret  = OK;
+                loop = FALSE;
+                break;
+
+            case 'N':   /* No */
+            case 'n':
+                ret  = NG;
+                loop = FALSE;
+                break;
+
+            default:
+                printf( "\n Æ­³Ø®¸ Ð½ ÃÞ½" );
+                break;
+        }
+    }
+
+    return ret;
+}//int kakunin_input( char *msg )
+
+/************************************/
+/* ÒÝÊÞ° ¶ÝØ ÌßÛ¸Þ×Ñ                */
+/*   º¼ÞÝ ¹²¿¸ ÃÞ°À Ë®³ Ì§²Ù READ   */
+/*   Êß×Ò°À : ¶²²Ýº°ÄÞ              */
+/*   ØÀ°Ý   : 0:OK                  */
+/*           -1:NG                  */
+/************************************/
+int kojin_data_read( int kaiin_code )
+{
+    int     ret;				/* ØÀ°Ý º°ÄÞ                */
+    FILE    *fp;				/* ¹²¿¸ ÃÞ°À Ë®³ Ì§²Ù Îß²ÝÀ */
+    long    fptr;				/* ¹²¿¸ ÃÞ°À Ì§²Ù Îß²ÝÀ     */
+    char    *fname = KEISOKU_TBL_NAME;		/* ¹²¿¸ ÃÞ°À Ë®³ Ì§²Ù       */
+
+    /* ¹²¿¸ ÃÞ°À Ë®³ Ì§²Ù OPEN -> NULL ? */
+    if( (fp = fopen( fname, "rb" )) == NULL ) {
+        printf( "\n ¹²¿¸ ÃÞ°À Ë®³ Ì§²Ù OPEN ´×°" );
+        return NG;
+    }
+
+    /* ¶Þ²Ä³ ÃÞ°À Îß²ÝÀ ¾¯Ä */
+    fptr = ( codedata_tbl[ kaiin_code - 1 ] - 1 ) *
+             sizeof( struct KEISOKU_TBL );
+
+    /* ¹²¿¸ ÃÞ°À Ë®³ Ì§²Ù ¦ À²¼®³ É ²Á ÏÃÞ SEEK -> OK ? */
+    if( (ret = fseek( fp, fptr, SEEK_SET )) != OK ) {
+        printf( "\n ¹²¿¸ ÃÞ°À Ë®³ Ì§²Ù SEEK ´×°" );
+
+        /* ¹²¿¸ ÃÞ°À  Ë®³ Ì§²Ù CLOSE */
+        fclose( fp );
+        return NG;
+    }
+
+    /* ¹²¿¸ ÃÞ°À Ë®³ Ì§²Ù READ -> 1²¶Þ² ? */
+    if( (ret = fread( (char *)&kojin_keisoku_tbl, sizeof( kojin_keisoku_tbl ),
+               1, fp )) != 1 ) {
+        printf( "\n ¹²¿¸ ÃÞ°À Ë®³ READ ´×°" );
+        ret = NG;
+    }
+    else {
+        ret = OK;
+    }
+
+    /* ¹²¿¸ ÃÞ°À  Ë®³ Ì§²Ù CLOSE */
+    fclose( fp );
+
+    return ret;
+}//int kojin_data_read( int kaiin_code )
+
+/************************************/
+/* ÒÝÊÞ° ¶ÝØ ÌßÛ¸Þ×Ñ                */
+/*   ¹²¿¸ ÃÞ°À Ë®³¼Þ                */
+/*   Êß×Ò°À : ¶²²Ýº°ÄÞ              */
+/*            Ë®³¼Þ Ò¯¾°¼Þ          */
+/*   ØÀ°Ý   : Å¼                    */
+/************************************/
+void kojin_data_disp( int kaiin_code, char *msg )
+{
+    printf( msg );
+    printf( "\n ¶²²Ýº°ÄÞ %3d", kaiin_code );
+
+    if( kojin_keisoku_tbl.count != 0 ) {
+        printf( "\n\n ¹²¿¸¶²½³   ¼®¶² ËÂÞ¹   ÃÞ°À     " );
+        printf( "»²º³ ËÂÞ¹   ÃÞ°À     »²¼Ý ËÂÞ¹   ÃÞ°À" );
+
+        printf( "\n    %3d", kojin_keisoku_tbl.count );
+
+        printf( "    %4.4s-%2.2s-%2.2s",
+            &kojin_keisoku_tbl.first_date[ 0 ],
+            &kojin_keisoku_tbl.first_date[ 4 ],
+            &kojin_keisoku_tbl.first_date[ 6 ] );
+
+        printf( "   %4d", kojin_keisoku_tbl.first_data );
+
+		printf( "    %4.4s-%2.2s-%2.2s",
+            &kojin_keisoku_tbl.max_date[ 0 ],
+            &kojin_keisoku_tbl.max_date[ 4 ],
+            &kojin_keisoku_tbl.max_date[ 6 ] );
+
+        printf( "   %4d", kojin_keisoku_tbl.max_data );
+
+        printf( "    %4.4s-%2.2s-%2.2s",
+            &kojin_keisoku_tbl.soku_date[ 0 ],
+            &kojin_keisoku_tbl.soku_date[ 4 ],
+            &kojin_keisoku_tbl.soku_date[ 6 ] );
+
+        printf( "   %4d", kojin_keisoku_tbl.soku_data[ 0 ] );
+
+        printf( "\n\n    1¶²Ï´   2¶²Ï´   3¶²Ï´   4¶²Ï´   ");
+        printf( "5¶²Ï´   6¶²Ï´   7¶²Ï´   8¶²Ï´   9¶²Ï´" );
+
+        printf( "\n " );
+        printf( "    %4d", kojin_keisoku_tbl.soku_data[ 1 ] );
+        printf( "    %4d", kojin_keisoku_tbl.soku_data[ 2 ] );
+        printf( "    %4d", kojin_keisoku_tbl.soku_data[ 3 ] );
+        printf( "    %4d", kojin_keisoku_tbl.soku_data[ 4 ] );
+        printf( "    %4d", kojin_keisoku_tbl.soku_data[ 5 ] );
+        printf( "    %4d", kojin_keisoku_tbl.soku_data[ 6 ] );
+        printf( "    %4d", kojin_keisoku_tbl.soku_data[ 7 ] );
+        printf( "    %4d", kojin_keisoku_tbl.soku_data[ 8 ] );
+        printf( "    %4d", kojin_keisoku_tbl.soku_data[ 9 ] );
+    }
+	else {
+        printf( "    ¹²¿¸ ÃÞ°À ¶Þ ±ØÏ¾Ý" );
+	return;
+	}
+    return;
+}//void kojin_data_disp( int kaiin_code, char *msg )

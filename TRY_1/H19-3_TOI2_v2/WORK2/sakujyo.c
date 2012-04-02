@@ -128,7 +128,8 @@ static int codedata_tbl_delete( int kaiin_code )
     ret = kojin_data_delete( kaiin_code );
         
     /* return       */
-    return OK;
+    //return OK;
+    return ret;
     
 }//static int codedata_tbl_delete( int kaiin_code )
 
@@ -153,11 +154,41 @@ static int kojin_data_delete( int kaiin_code )
         fclose( fp );
         return NG;
     }
+    
+    //debug
+    printf("\n[%s:%d]\n", __FILE__, __LINE__);
+    printf("kojin_keisoku_tbl.kaiin_code=%d\n", kojin_keisoku_tbl.kaiin_code);
 
     i = 0;
     for( ; ; ) {
+        /* read: kojin_keisoku_tbl      */
+        ret = fread( (char *)&kojin_keisoku_tbl,
+                   sizeof( kojin_keisoku_tbl ), 1, fp );
+        if (ret != 1) {
+            printf("\n[%s:%d]\n", __FILE__, __LINE__);
+            printf("Read error: ret=%d\n", ret);
+            printf("kojin_keisoku_tbl.kaiin_code=%d\n", kojin_keisoku_tbl.kaiin_code);
+            exit(1);
+        }//if (ret != 1)
         
+        /* kaiin_code   => registered?      */
+        if( kaiin_code == kojin_keisoku_tbl.kaiin_code ) {
+            continue;
+        }
+        
+        /* If not registered    => add to a new table   */
+        if( (ret = fwrite( (char *)&kojin_keisoku_tbl,
+                   sizeof( kojin_keisoku_tbl ), 1, tmp )) != 1 ) {
+            printf( "\n ¹²¿¸ ÃÞ°À Ë®³ Ì§²Ù WRITE ´×°" );
+            ret = NG;
+            break;
+        }
+        i++;
     }//for( ; ; )
+    
+    //debug
+    printf("\n[%s:%d]\n", __FILE__, __LINE__);
+    printf("A new table created: %s\n", tmpfl);
 
     /* ÃÝÎß×Ø Ì§²Ù CLOSE */
     fclose( tmp );

@@ -12,3 +12,4 @@ for_applicants/*
 .git/*
 *.i
 *.tbl
+*.tmp

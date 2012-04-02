@@ -6,7 +6,13 @@
 #include <stdio.h>
 #include <string.h>
 
+/*
 #include "common.h"
+*/
+#ifndef INCLUDE_COMMON
+#define INCLUDE_COMMON
+#include "common.h"
+#endif
 #include "main.h"
 #include "admin.h"
 #include "nyuukai.h"
@@ -419,3 +425,10 @@ void dummy_func( void )
 }//void dummy_func( void )
 
 struct KEISOKU_TBL dummy_tbl;
+
+void dummy_func2( int n1, char string[])
+{
+    
+}//void dummy_func2( int n1, char string[])
+
+

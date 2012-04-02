@@ -126,26 +126,7 @@ static int codedata_tbl_delete( int kaiin_code )
     
     /* ¹²¿¸ ÃÞ°À Ë®³ »¸¼Þ® -> OK ? */
     ret = kojin_data_delete( kaiin_code );
-    
-    //debug
-//    printf("kojin_keisoku_tbl.kaiin_code=%d\n",
-//                    kojin_keisoku_tbl.kaiin_code);
-//    printf("kojin_keisoku_tbl[%d].kaiin_code=%d\n",
-  //          kaiin_code, kojin_keisoku_tbl[kaiin_code].kaiin_code);
-
-    //debug
-//    printf("\n[%s:%d]\n", __FILE__, __LINE__);
-//    printf("kaiin_code=%d\n", kaiin_code);
-//    printf("\n");
-//    
-//    for (i = 0; i < 10; i++) {
-//        printf("codedata_tbl[%d]=%d\n", i, codedata_tbl[i]);
-//    }//for (i = 0; i < 10; i++)
-//    printf("\n");
-    
-    //debug
-    //printf("\n[%d] codedata_tbl_delete()\n", __LINE__);
-    
+        
     /* return       */
     return OK;
     
@@ -175,43 +156,8 @@ static int kojin_data_delete( int kaiin_code )
 
     i = 0;
     for( ; ; ) {
-
-        /* ¹²¿¸ ÃÞ°À Ë®³ Ì§²Ù READ -> 1²¶Þ² ? */
-        if( (ret = fread( (char *)&kojin_keisoku_tbl,
-                   sizeof( kojin_keisoku_tbl ), 1, fp )) != 1 ) {
-
-            /* READ ´×° ? */
-            if( ferror( fp ) != 0 ) {
-                printf( "\n ¹²¿¸ ÃÞ°À Ë®³ Ì§²Ù READ ´×°" );
-                ret = NG;
-            }
-            else {
-                /* Ì§²Ù EOF ÃÞ Å² ? */
-                if( feof( fp ) == 0 ) {
-                    printf( "\n ¹²¿¸ ÃÞ°À Ë®³ Ì§²Ù READ ´×°" );
-                    ret = NG;
-                }
-                else {
-                   ret = OK;
-                }
-            }
-            break;
-        }
-
-        /* »¸¼Þ® ÃÞ°À ? */
-        if( kaiin_code == kojin_keisoku_tbl.kaiin_code ) {
-            continue;
-        }
-
-        /* ÃÝÎß×Ø Ì§²Ù WRITE -> 1²¶Þ² ? */
-        if( (ret = fwrite( (char *)&kojin_keisoku_tbl,
-                   sizeof( kojin_keisoku_tbl ), 1, tmp )) != 1 ) {
-            printf( "\n ¹²¿¸ ÃÞ°À Ë®³ Ì§²Ù WRITE ´×°" );
-            ret = NG;
-            break;
-        }
-        i++;
-    }
+        
+    }//for( ; ; )
 
     /* ÃÝÎß×Ø Ì§²Ù CLOSE */
     fclose( tmp );
@@ -219,34 +165,6 @@ static int kojin_data_delete( int kaiin_code )
     /* ¹²¿¸ ÃÞ°À Ë®³ Ì§²Ù CLOSE */
     fclose( fp );
 
-    /* ¾²¼Þ®³ ¼­³Ø®³ ? */
-    if( ret == OK ) {
-
-        /* ¹²¿¸ ÃÞ°À Ë®³ Ì§²Ù DELETE -> 0²¶Þ² ? */
-        if( (ret = remove( fname )) != 0 ) {
-            printf( "\n ¹²¿¸ ÃÞ°À Ë®³ Ì§²Ù »¸¼Þ® ´×°" );
-            ret = NG;
-        }
-        else {
-            /* ¶·ºÐ ÃÞ°À ±Ø ? */
-            if( i > 0 ) {
-
-                /* ÃÝÎß×Ø Ì§²Ù ¦ ¹²¿¸ ÃÞ°À Ë®³ Ì§²Ù Æ ØÈ°Ñ ½Ù -> 0²¶Þ² ? */
-                if( (ret = rename( tmpfl, fname )) != 0 ) {
-                    printf( "\n ¹²¿¸ ÃÞ°À Ë®³ Ì§²Ù ØÈ°Ñ ´×°" );
-                    ret = NG;
-                }
-            }
-            else {
-                /* ÃÝÎß×Ø Ì§²Ù »¸¼Þ® */
-                remove( tmpfl );
-            }
-        }
-    }
-    else {
-        /* ÃÝÎß×Ø Ì§²Ù »¸¼Þ® */
-        remove( tmpfl );
-    }
-
+    
     return ret;
 }//static int kojin_data_delete( int kaiin_code )

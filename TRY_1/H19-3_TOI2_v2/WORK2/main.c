@@ -412,3 +412,10 @@ void kojin_data_disp( int kaiin_code, char *msg )
 	}
     return;
 }//void kojin_data_disp( int kaiin_code, char *msg )
+
+void dummy_func( void )
+{
+    printf("hi.\n");
+}//void dummy_func( void )
+
+struct KEISOKU_TBL dummy_tbl;

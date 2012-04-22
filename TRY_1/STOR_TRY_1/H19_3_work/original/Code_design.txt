@@ -1,0 +1,81 @@
+<Basics>------------------------------
+1. File: Code_design.txt
+2. Date: 
+3. Author: 岩淵　謙
+4. Version: 1.0
+
+<functions>------------------------------
+
+<variables>------------------------------
+
+<flow>------------------------------
+
+<Algorythms & formula>----------------------
+<coding steps>---------------------------
+[1] 仕様（１）
+*1. [keisoku.c] keisoku_data_sort()
+(557)
+	1. add one more if condition block
+		if( sort_keisoku_tbl[ i ].max_data < 
+		    sort_keisoku_tbl[ j ].max_data ) {
+		=> (sort_keisoku_tbl[ i ].max_data == 
+		    sort_keisoku_tbl[ j ].max_data)
+				sort_keisoku_tbl[ j ].kaiin_code)
+		    && (sort_keisoku_tbl[ i ].kaiin_code >
+
+*[2] 仕様（２）①
+*1.[keisoku.c] keisoku_sort_disp()
+	*1. L.617: for statement => edit 
+
+*[3] 仕様（２）②
+*1.[keisoku.c] keisoku_data_disp()
+	*1. Change the parameter
+		Before:	( int cnt )
+		After:	( int cnt, int mode )
+	*2. Edit: 'printf' section (L.728-729)
+*1.[keisoku.h] keisoku_data_disp()
+	*1. Change the parameter
+		Before:	( int cnt )
+		After:	( int cnt, int mode )
+*1.[keisoku.c] keisoku_rank()
+	*1. add: "#ifdef TOI1"
+	*2. L.529: if( ret == OK ) => edit
+		*1) keisoku_data_sort()
+		*2) keisoku_data_disp()
+	*3. add: descending data
+		*1) keisoku_data_sort()
+		*2) keisoku_data_disp()
+
+*2.[keisoku.c] keisoku_data_sort()
+	*1. Change the parameter
+		Before:	( int cnt )
+		After:	( int cnt, int mode )
+	*2. Edit: sort section ('for' block)
+		1) Use 'if' block, change the sort
+			direction according to 'mode'
+*3.[keisoku.h] keisoku_data_sort()
+	*1. Change the parameter
+		=> see 2 above
+ 
+ *4. add: menu item
+ 	-"4:ﾗﾝｸﾉﾋｮｳｼﾞ"
+ 	*1.[main.c] main()
+ 		*1) add: "#ifdef TOI1"
+ 		*1) "printf" => add: a new choice
+ 		*2) switch
+ 			i.	add a new case
+ 			ii.	add: keisoku_rank()
+ 	*2.[keisoku.c] keisoku_rank()
+ 		*1) edit: memory class designifier
+ 			=> from static to default
+ 	*3.[keisoku.h] keisoku_rank()
+ 		*1) edit: memory class designifier
+ 			=> from static to default
+ 
+<further>---------------------------
+
+<coding history>---------------------------
+*1. first coding
+2. add: "-s" option
+
+===================EOF===================
